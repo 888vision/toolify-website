@@ -8,159 +8,47 @@ export default function Header() {
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/20 bg-white/80 backdrop-blur-xl shadow-lg">
-      <div className="container mx-auto flex h-14 sm:h-16 items-center justify-between px-3 sm:px-4 max-w-7xl">
-        {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2">
-          <span className="text-xl sm:text-2xl font-bold text-gray-900">Toolify</span>
-          <span className="text-xs text-gray-500 hidden sm:inline">Toolify logo</span>
+    <header className="sticky top-0 z-50 w-full border-b border-gray-200/50 bg-white/95 backdrop-blur-xl shadow-lg">
+      <div className="container mx-auto flex h-16 sm:h-20 items-center justify-between px-4 sm:px-6 max-w-7xl">
+        {/* Logo - Red theme */}
+        <Link href="/" className="flex items-center space-x-2 group">
+          <div className="text-2xl sm:text-3xl font-black bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 bg-clip-text text-transparent group-hover:from-red-700 group-hover:via-rose-700 transition-all">
+            SEMRUSH
+          </div>
+          <span className="hidden sm:inline text-xs text-gray-500 font-medium">
+            Global SEO Suite
+          </span>
         </Link>
 
         {/* Navigation */}
-        <nav className="hidden md:flex items-center space-x-6">
-          <Link href="/" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-            Free Tools
-          </Link>
-          
-          {/* Products Dropdown */}
-          <div 
-            className="relative group"
-            onMouseEnter={() => setOpenDropdown('products')}
-            onMouseLeave={() => setOpenDropdown(null)}
+        <nav className="hidden md:flex items-center space-x-8">
+          <Link 
+            href="/#features" 
+            className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors relative group"
           >
-            <button className="text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center">
-              Products
-              <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {openDropdown === 'products' && (
-              <div 
-                className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
-                onMouseEnter={() => setOpenDropdown('products')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link href="/?filter=new" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  New AIs
-                </Link>
-                <Link href="/?filter=saved" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Most Saved AIs
-                </Link>
-                <Link href="/?filter=used" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Most Used AIs
-                </Link>
-                <Link href="/?filter=apps" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  AI Apps
-                </Link>
-                <Link href="/?filter=discord" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Discord of AI
-                </Link>
-                <Link href="/?filter=extensions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  AI Chrome Extensions
-                </Link>
-                <Link href="/?filter=gpts" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  GPTs
-                </Link>
-                <Link href="/?filter=models" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  AI Models
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Category Dropdown */}
-          <div 
-            className="relative group"
-            onMouseEnter={() => setOpenDropdown('category')}
-            onMouseLeave={() => setOpenDropdown(null)}
+            Features
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all"></span>
+          </Link>
+          <Link 
+            href="/pricing" 
+            className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors relative group"
           >
-            <button className="text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center">
-              Category
-              <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {openDropdown === 'category' && (
-              <div 
-                className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-lg border border-gray-200 py-2 max-h-96 overflow-y-auto z-50"
-                onMouseEnter={() => setOpenDropdown('category')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link href="/" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  All Categories
-                </Link>
-                <Link href="/?category=Chatbots%20%26%20Virtual%20Companions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Chatbots & Virtual Companions
-                </Link>
-                <Link href="/?category=Office%20%26%20Productivity" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Office & Productivity
-                </Link>
-                <Link href="/?category=Image%20Generation%20%26%20Editing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Image Generation & Editing
-                </Link>
-                <Link href="/?category=Art%20%26%20Creative%20Design" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Art & Creative Design
-                </Link>
-                <Link href="/?category=Coding%20%26%20Development" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Coding & Development
-                </Link>
-                <Link href="/?category=Video%20%26%20Animation" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Video & Animation
-                </Link>
-                <Link href="/?category=Writing%20%26%20Editing" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Writing & Editing
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Ranking Dropdown */}
-          <div 
-            className="relative group"
-            onMouseEnter={() => setOpenDropdown('ranking')}
-            onMouseLeave={() => setOpenDropdown(null)}
+            Pricing
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all"></span>
+          </Link>
+          <Link 
+            href="#solutions" 
+            className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors relative group"
           >
-            <button className="text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center">
-              Ranking
-              <svg className="ml-1 h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {openDropdown === 'ranking' && (
-              <div 
-                className="absolute top-full left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
-                onMouseEnter={() => setOpenDropdown('ranking')}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link href="/?sort=monthly" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Top AI By Monthly
-                </Link>
-                <Link href="/?sort=categories" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Top AI By Categories
-                </Link>
-                <Link href="/?sort=regions" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Top AI By Regions
-                </Link>
-                <Link href="/?sort=source" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Top AI By Source
-                </Link>
-                <Link href="/?sort=revenue" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Top AI by Revenue
-                </Link>
-              </div>
-            )}
-          </div>
-          <Link href="/prompts" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-            Prompts
+            Solutions
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all"></span>
           </Link>
-          <Link href="/jobs" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-            Jobs
-          </Link>
-          <Link href="/research" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-            Research
-          </Link>
-          <Link href="/submit" className="text-sm font-medium text-gray-600 hover:text-gray-900">
-            Submit
+          <Link 
+            href="#resources" 
+            className="text-sm font-semibold text-gray-700 hover:text-red-600 transition-colors relative group"
+          >
+            Resources
+            <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-red-600 group-hover:w-full transition-all"></span>
           </Link>
         </nav>
 
@@ -168,28 +56,26 @@ export default function Header() {
         <div className="flex items-center space-x-4">
           <button 
             onClick={() => {
-              // For now, just show an alert. You can replace this with actual login functionality later
-              alert('Login functionality will be implemented. For now, you can browse all tools without logging in.');
+              const loginSection = document.getElementById('login');
+              if (loginSection) {
+                loginSection.scrollIntoView({ behavior: 'smooth' });
+              } else {
+                alert('Login functionality coming soon!');
+              }
             }}
-            className="text-sm font-medium text-gray-600 hover:text-gray-900 hidden md:block cursor-pointer transition-colors"
+            className="text-sm font-semibold text-gray-700 hover:text-red-600 hidden md:block transition-colors"
           >
-            Login
+            Log In
           </button>
-          <div className="relative group hidden md:block">
-            <button 
-              className="text-sm font-medium text-gray-600 hover:text-gray-900 cursor-pointer transition-colors"
-              onClick={() => {
-                // Language selector - for now just show current language
-                alert('Language selector: Currently set to English (en)');
-              }}
-            >
-              en
-            </button>
-          </div>
+          <Link
+            href="/pricing"
+            className="px-5 py-2.5 bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 text-white rounded-xl font-bold text-sm hover:from-red-700 hover:via-rose-700 hover:to-pink-700 transition-all shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
+          >
+            Start Free Trial
+          </Link>
           <MobileMenu />
         </div>
       </div>
     </header>
   );
 }
-

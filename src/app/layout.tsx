@@ -16,25 +16,37 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Toolify - Discover The Best AI Websites & Tools",
-  description: "Discover the best AI tools and websites. Browse 60+ AI tools across multiple categories including chatbots, image generation, coding, writing, and more. Updated daily.",
-  keywords: ["AI tools", "artificial intelligence", "AI websites", "AI directory", "ChatGPT", "AI chatbots", "AI image generation", "AI writing tools"],
-  authors: [{ name: "Toolify" }],
+  title: "SEMRUSH Global SEO Suite – All‑in‑One SEO Platform",
+  description:
+    "SEMRUSH is the all‑in‑one SEO platform for global brands. Audit your website, track keywords, analyze competitors, and grow organic traffic with enterprise‑grade data.",
+  keywords: [
+    "SEMRUSH",
+    "SEO tool",
+    "SEO software",
+    "keyword research",
+    "site audit",
+    "backlink analysis",
+    "rank tracking",
+    "content marketing",
+  ],
+  authors: [{ name: "SEMRUSH Global" }],
   viewport: {
     width: "device-width",
     initialScale: 1,
     maximumScale: 5,
   },
   openGraph: {
-    title: "Toolify - Discover The Best AI Websites & Tools",
-    description: "Discover the best AI tools and websites. Browse 60+ AI tools across multiple categories.",
+    title: "SEMRUSH Global SEO Suite – All‑in‑One SEO Platform",
+    description:
+      "Run technical audits, research keywords, monitor rankings, and analyze competitors from a single high‑performance SEO platform.",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Toolify - Discover The Best AI Websites & Tools",
-    description: "Discover the best AI tools and websites. Browse 60+ AI tools across multiple categories.",
+    title: "SEMRUSH Global SEO Suite – All‑in‑One SEO Platform",
+    description:
+      "Trusted SEO analytics and competitive intelligence for teams around the world.",
   },
   robots: {
     index: true,

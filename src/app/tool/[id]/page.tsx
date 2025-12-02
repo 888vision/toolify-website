@@ -2,9 +2,96 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { aiTools } from '@/data/tools';
-import { AITool } from '@/data/tools';
 import Link from 'next/link';
 import { useState } from 'react';
+
+function getPersonaAndUseCases(category: string) {
+  const base = {
+    personas: ['Founders & operators', 'Marketing & growth teams', 'Product & engineering'],
+    useCases: [
+      'Discover best-in-class AI tools for your stack in minutes.',
+      'Quickly shortlist 3–5 vendors to evaluate for upcoming initiatives.',
+      'Benchmark your current tools against emerging alternatives.',
+    ],
+  };
+
+  const mapping: Record<
+    string,
+    { personas?: string[]; useCases?: string[]; notes?: string }
+  > = {
+    'Image Generation & Editing': {
+      personas: ['Creative directors', 'Designers', 'Marketing teams'],
+      useCases: [
+        'Generate on-brand visuals and campaign assets at scale.',
+        'Rapidly prototype creative directions before studio production.',
+        'Localise creatives for different markets with minimal overhead.',
+      ],
+      notes: 'Most teams pair image generation tools with collaboration and asset management platforms.',
+    },
+    'Chatbots & Virtual Companions': {
+      personas: ['Customer support leaders', 'Community teams', 'Product managers'],
+      useCases: [
+        'Deflect repetitive support tickets with AI-first chat experiences.',
+        'Offer 24/7 assistance across web, in-product, and messaging channels.',
+        'Prototype new conversational experiences before engineering investment.',
+      ],
+      notes: 'Consider data governance and handoff-to-human flows when evaluating chat solutions.',
+    },
+    'Coding & Development': {
+      personas: ['Engineering leaders', 'Individual contributors', 'Developer experience teams'],
+      useCases: [
+        'Boost code throughput with AI pair programming and review.',
+        'Standardise patterns and best practices via AI-assisted refactors.',
+        'Accelerate prototyping and internal tools development.',
+      ],
+      notes: 'Align AI coding tools with your security, compliance, and source control strategy.',
+    },
+    'Office & Productivity': {
+      personas: ['Ops leaders', 'Knowledge managers', 'Cross-functional teams'],
+      useCases: [
+        'Turn scattered documents into searchable, living knowledge.',
+        'Automate recurring reporting and status updates.',
+        'Give every team a shared workspace for AI-assisted work.',
+      ],
+      notes: 'Evaluate how well tools integrate with your existing productivity suite.',
+    },
+    'Business Management': {
+      personas: ['Revenue leaders', 'Operations', 'Strategy & finance'],
+      useCases: [
+        'Gain a unified view of pipeline, revenue, and operations.',
+        'Model different scenarios and investment paths with AI.',
+        'Design repeatable playbooks for go-to-market and retention.',
+      ],
+      notes: 'Prioritise tools that can plug into your current data and analytics stack.',
+    },
+    'Video & Animation': {
+      personas: ['Content teams', 'Creative studios', 'Marketing'],
+      useCases: [
+        'Produce high-quality explainers and promos without full studio budgets.',
+        'Localise and repurpose existing content across markets and channels.',
+        'Prototype new video formats and narratives rapidly.',
+      ],
+      notes: 'Ensure output formats and quality align with your distribution channels.',
+    },
+    'Education & Translation': {
+      personas: ['Educators', 'L&D teams', 'Knowledge workers'],
+      useCases: [
+        'Build adaptive learning experiences for different audiences.',
+        'Translate and localise content while preserving nuance.',
+        'Turn subject-matter expertise into reusable learning paths.',
+      ],
+      notes: 'Focus on accuracy, domain adaptation, and review workflows.',
+    },
+  };
+
+  const matched = mapping[category] ?? {};
+
+  return {
+    personas: matched.personas ?? base.personas,
+    useCases: matched.useCases ?? base.useCases,
+    notes: matched.notes,
+  };
+}
 
 export default function ToolDetailPage() {
   const params = useParams();
@@ -47,7 +134,8 @@ export default function ToolDetailPage() {
     }
   };
 
-  const defaultIcon = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Crect width="80" height="80" fill="%23E5E7EB" rx="8"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="32" font-weight="600" fill="%236B7280"%3EAI%3C/text%3E%3C/svg%3E';
+  const defaultIcon =
+    'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"%3E%3Crect width="80" height="80" fill="%23E5E7EB" rx="8"/%3E%3Ctext x="50%25" y="50%25" dominant-baseline="middle" text-anchor="middle" font-size="32" font-weight="600" fill="%236B7280"%3EAI%3C/text%3E%3C/svg%3E';
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -59,6 +147,8 @@ export default function ToolDetailPage() {
       console.error('Failed to copy:', err);
     }
   };
+
+  const personaConfig = getPersonaAndUseCases(tool.category);
 
   return (
     <main className="min-h-screen bg-gray-50">
@@ -169,15 +259,110 @@ export default function ToolDetailPage() {
               </div>
             </div>
 
-            {/* Category Info */}
-            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Category</h2>
-              <Link
-                href={`/?category=${encodeURIComponent(tool.category)}`}
-                className="inline-block px-4 py-2 bg-blue-50 text-blue-700 rounded-lg hover:bg-blue-100 transition-colors"
-              >
-                {tool.category}
-              </Link>
+            {/* Operator overview */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6 space-y-6">
+              <div>
+                <h2 className="text-xl font-bold text-gray-900 mb-2">Where this tool shines</h2>
+                <p className="text-sm text-gray-600">
+                  Use this tool as part of a modern AI stack for{' '}
+                  <span className="font-semibold">{tool.category.toLowerCase()}</span>. Teams often
+                  pair it with complementary tools across adjacent categories for end-to-end flows.
+                </p>
+              </div>
+
+              <div className="grid gap-4 md:grid-cols-2">
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-[0.25em] mb-2">
+                    Best suited for
+                  </p>
+                  <ul className="space-y-1.5">
+                    {personaConfig.personas.map((persona) => (
+                      <li key={persona} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-blue-500" />
+                        <span>{persona}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="rounded-xl border border-gray-200 bg-gray-50 p-4">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-[0.25em] mb-2">
+                    Suggested use cases
+                  </p>
+                  <ul className="space-y-1.5">
+                    {personaConfig.useCases.map((useCase) => (
+                      <li key={useCase} className="flex items-start gap-2 text-sm text-gray-700">
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                        <span>{useCase}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+
+              {personaConfig.notes && (
+                <div className="rounded-xl border border-blue-100 bg-blue-50 p-4">
+                  <p className="text-xs font-semibold text-blue-700 uppercase tracking-[0.25em] mb-1">
+                    Evaluation note
+                  </p>
+                  <p className="text-sm text-blue-800">{personaConfig.notes}</p>
+                </div>
+              )}
+            </div>
+
+            {/* Implementation blueprint & stack fit */}
+            <div className="bg-white rounded-lg border border-gray-200 p-6 mb-6 space-y-6">
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-[0.25em] mb-2">
+                    4–week implementation blueprint
+                  </p>
+                  <ol className="space-y-2 text-sm text-gray-700">
+                    <li>
+                      <span className="font-semibold text-gray-900">Week 1 · Discovery</span> — Align on objectives,
+                      success metrics, and key workflows where {tool.name} will be evaluated.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-gray-900">Week 2 · Pilot</span> — Roll out to a small set of
+                      champion users, instrument adoption and qualitative feedback.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-gray-900">Week 3 · Integration</span> — Connect with adjacent
+                      tools in your stack and refine governance, permissions, and review flows.
+                    </li>
+                    <li>
+                      <span className="font-semibold text-gray-900">Week 4 · Scale decision</span> — Compare outcomes
+                      vs. baselines and decide on rollout, budget, and enablement needs.
+                    </li>
+                  </ol>
+                </div>
+                <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-4 space-y-3">
+                  <p className="text-xs font-semibold text-gray-500 uppercase tracking-[0.25em]">
+                    Where it fits in a modern stack
+                  </p>
+                  <p className="text-sm text-gray-700">
+                    {tool.name} typically sits alongside your existing systems as a{' '}
+                    <span className="font-semibold lowercase">{tool.category}</span> layer, augmenting—not replacing—
+                    foundational data, identity, and collaboration platforms.
+                  </p>
+                  <ul className="space-y-1.5 text-sm text-gray-700">
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-indigo-500" />
+                      <span>Upstream: data sources, content repositories, or customer touchpoints.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-purple-500" />
+                      <span>Core: {tool.name} orchestrates AI-powered generation, reasoning, or automation.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="mt-1 h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      <span>Downstream: analytics, review workflows, and business systems of record.</span>
+                    </li>
+                  </ul>
+                  <p className="text-xs text-gray-500">
+                    Use Toolify to identify complementary tools that complete your end‑to‑end flow.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Related Tools */}

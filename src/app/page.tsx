@@ -1,354 +1,316 @@
 'use client';
 
-import { useState, useRef, useMemo } from 'react';
-import { aiTools } from '@/data/tools';
-import ToolCard from '@/components/ToolCard';
-import ToolList from '@/components/ToolList';
-import ScrollToTop from '@/components/ScrollToTop';
+import { useState } from 'react';
+import Link from 'next/link';
 
 export default function Home() {
-  const [heroSearchQuery, setHeroSearchQuery] = useState('');
-  const [showAllTools, setShowAllTools] = useState(false);
-  const toolsSectionRef = useRef<HTMLDivElement>(null);
-  
-  const hotTools = aiTools.filter(tool => tool.isHot);
-  const freeTools = aiTools.filter(tool => tool.isFree);
-  const newTools = aiTools.filter(tool => tool.isNew);
+  const [email, setEmail] = useState('');
 
-  const [selectedCategory, setSelectedCategory] = useState<string>('');
-  const [activeFilter, setActiveFilter] = useState<'today' | 'new' | 'saved' | 'used' | null>(null);
+  const features = [
+    {
+      icon: '🔍',
+      title: 'Keyword Research',
+      description: 'Discover high-value keywords with our comprehensive database of 25+ billion keywords across 140+ countries.',
+    },
+    {
+      icon: '📊',
+      title: 'Site Audit',
+      description: 'Run comprehensive technical SEO audits and identify issues that impact your search rankings.',
+    },
+    {
+      icon: '🎯',
+      title: 'Rank Tracking',
+      description: 'Monitor your keyword positions across search engines and track your SEO performance over time.',
+    },
+    {
+      icon: '🔗',
+      title: 'Backlink Analysis',
+      description: 'Analyze your backlink profile and discover link-building opportunities with competitor insights.',
+    },
+    {
+      icon: '📈',
+      title: 'Competitor Analysis',
+      description: 'Uncover your competitors\' SEO strategies, top keywords, and traffic sources.',
+    },
+    {
+      icon: '✍️',
+      title: 'Content Marketing',
+      description: 'Create SEO-optimized content with our content templates and topic research tools.',
+    },
+  ];
 
-  // Calculate category counts
-  const categoryCounts = useMemo(() => {
-    const counts: Record<string, number> = {};
-    aiTools.forEach(tool => {
-      counts[tool.category] = (counts[tool.category] || 0) + 1;
-    });
-    return counts;
-  }, []);
+  const benefits = [
+    {
+      stat: '25B+',
+      label: 'Keywords in Database',
+    },
+    {
+      stat: '140+',
+      label: 'Countries Covered',
+    },
+    {
+      stat: '10M+',
+      label: 'Active Users',
+    },
+    {
+      stat: '99.9%',
+      label: 'Uptime SLA',
+    },
+  ];
 
-  // Get unique categories
-  const categories = useMemo(() => {
-    return Array.from(new Set(aiTools.map(tool => tool.category))).sort();
-  }, []);
-
-  const handleSearch = () => {
-    if (heroSearchQuery.trim()) {
-      setShowAllTools(true);
-      // Scroll to tools section
-      setTimeout(() => {
-        toolsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
-    }
-  };
-
-  const handleCategoryClick = (category: string) => {
-    setSelectedCategory(category);
-    setShowAllTools(true);
-    setHeroSearchQuery('');
-    setActiveFilter(null);
-    // Scroll to tools section
-    setTimeout(() => {
-      toolsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
-  };
-
-  // Filter tools based on active filter
-  const getFilteredTools = () => {
-    let filtered = [...aiTools];
-    
-    if (activeFilter === 'new') {
-      filtered = filtered.filter(tool => tool.isNew);
-    } else if (activeFilter === 'saved') {
-      // For now, show hot tools as "most saved"
-      filtered = filtered.filter(tool => tool.isHot);
-    } else if (activeFilter === 'used') {
-      // For now, show hot tools as "most used"
-      filtered = filtered.filter(tool => tool.isHot);
-    } else if (activeFilter === 'today') {
-      // Show new tools as "today"
-      filtered = filtered.filter(tool => tool.isNew || tool.isHot);
-    }
-    
-    return filtered;
-  };
+  const testimonials = [
+    {
+      name: 'Sarah Chen',
+      role: 'SEO Director, TechCorp',
+      content: 'SEMRUSH has transformed our SEO strategy. We\'ve increased organic traffic by 300% in just 6 months.',
+      avatar: '👩‍💼',
+    },
+    {
+      name: 'Michael Rodriguez',
+      role: 'Marketing Manager, StartupXYZ',
+      content: 'The competitor analysis features are incredible. We discovered opportunities our competitors didn\'t even know existed.',
+      avatar: '👨‍💻',
+    },
+    {
+      name: 'Emma Thompson',
+      role: 'Content Strategist, MediaCo',
+      content: 'Content templates and topic research have saved us countless hours. Our content now ranks on page 1 consistently.',
+      avatar: '👩‍🎨',
+    },
+  ];
 
   return (
-    <main className="min-h-screen relative">
-      {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-purple-600 via-blue-600 to-indigo-700 text-white overflow-hidden">
-        {/* Animated background elements */}
+    <main className="min-h-screen bg-white">
+      {/* Hero Section - Premium Red Theme */}
+      <section className="relative bg-gradient-to-br from-red-900 via-red-800 to-rose-900 text-white overflow-hidden">
+        {/* Premium animated background with particles */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute -top-40 -right-40 w-80 h-80 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
-          <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-blue-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-indigo-300 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute -top-40 -right-40 w-[600px] h-[600px] bg-red-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse"></div>
+          <div className="absolute -bottom-40 -left-40 w-[600px] h-[600px] bg-rose-500/20 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-pink-500/15 rounded-full mix-blend-multiply filter blur-3xl opacity-25 animate-pulse" style={{ animationDelay: '4s' }}></div>
+          
+          {/* Premium grid overlay */}
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
+          
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 animate-shimmer"></div>
         </div>
         
-        <div className="container mx-auto px-4 py-16 md:py-20 max-w-7xl relative z-10">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 leading-tight px-2">
-              <span className="block mb-2">Discover The Best</span>
-              <span className="block bg-gradient-to-r from-yellow-200 via-pink-200 to-purple-200 bg-clip-text text-transparent">
-                AI Websites & Tools
+        <div className="container mx-auto px-4 py-24 md:py-40 max-w-7xl relative z-10">
+          <div className="text-center max-w-5xl mx-auto">
+            {/* Premium badge */}
+            <div className="inline-flex items-center gap-2 px-6 py-3 mb-8 bg-white/10 backdrop-blur-xl rounded-full border border-white/20 shadow-2xl">
+              <div className="w-2 h-2 bg-red-400 rounded-full animate-pulse"></div>
+              <span className="text-sm font-semibold tracking-wide">Trusted by 10M+ SEO professionals worldwide</span>
+            </div>
+            
+            {/* Premium heading with enhanced typography */}
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-black mb-8 leading-[1.1] tracking-tight">
+              <span className="block mb-3 text-white drop-shadow-2xl">The All-in-One</span>
+              <span className="block bg-gradient-to-r from-red-200 via-pink-200 to-rose-200 bg-clip-text text-transparent drop-shadow-lg">
+                SEO Platform
               </span>
+              <span className="block mt-3 text-4xl sm:text-5xl md:text-6xl text-white/95">for Global Brands</span>
             </h1>
-            <p className="text-base sm:text-lg md:text-xl text-white/90 mb-6 sm:mb-8 leading-relaxed px-2">
-              {aiTools.length} AIs and {categories.length} categories in the best AI tools directory.
-              <br className="hidden sm:block" />
-              <span className="text-white/70 block sm:inline">AI tools list & GPTs store are updated daily by ChatGPT.</span>
+            
+            <p className="text-xl sm:text-2xl md:text-3xl text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-light">
+              Audit your website, track keywords, analyze competitors, and grow organic traffic with enterprise-grade SEO data and insights.
             </p>
-            
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center gap-3 sm:gap-4 mb-8 sm:mb-10 px-2">
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg hover:bg-white/30 transition-all min-w-[80px]">
-                <div className="text-xl sm:text-2xl font-bold text-white">{aiTools.length}</div>
-                <div className="text-xs sm:text-sm text-white/80">Tools</div>
-              </div>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg hover:bg-white/30 transition-all min-w-[80px]">
-                <div className="text-xl sm:text-2xl font-bold text-white">{hotTools.length}</div>
-                <div className="text-xs sm:text-sm text-white/80">Hot</div>
-              </div>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg hover:bg-white/30 transition-all min-w-[80px]">
-                <div className="text-xl sm:text-2xl font-bold text-white">{freeTools.length}</div>
-                <div className="text-xs sm:text-sm text-white/80">Free</div>
-              </div>
-              <div className="px-4 sm:px-6 py-2.5 sm:py-3 bg-white/20 backdrop-blur-md rounded-xl border border-white/30 shadow-lg hover:bg-white/30 transition-all min-w-[80px]">
-                <div className="text-xl sm:text-2xl font-bold text-white">{newTools.length}</div>
-                <div className="text-xs sm:text-sm text-white/80">New</div>
-              </div>
-            </div>
-            
-            <p className="text-sm text-white/70 mb-8">
-              Sponsored by <span className="font-semibold text-white">i10X</span> - All-in-one AI platform with 500+ AI tools and top models
-            </p>
-            
-            {/* Search Bar */}
-            <div className="max-w-2xl mx-auto mb-6 sm:mb-8 px-4">
-              <div className="relative">
-                <input
-                  type="text"
-                  placeholder="Search AI tools..."
-                  value={heroSearchQuery}
-                  onChange={(e) => {
-                    setHeroSearchQuery(e.target.value);
-                    if (e.target.value.trim()) {
-                      setShowAllTools(true);
-                    } else {
-                      setShowAllTools(false);
-                    }
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      handleSearch();
-                    }
-                  }}
-                  className="w-full px-4 sm:px-6 py-3 sm:py-4 text-sm sm:text-base bg-white/95 backdrop-blur-md border-2 border-white/30 rounded-xl focus:outline-none focus:border-white focus:ring-4 focus:ring-white/20 shadow-xl text-gray-900 placeholder-gray-500 pr-20 sm:pr-24"
-                />
-                <button 
-                  onClick={handleSearch}
-                  className="absolute right-1.5 sm:right-2 top-1/2 -translate-y-1/2 px-4 sm:px-6 py-2 sm:py-2.5 bg-gradient-to-r from-yellow-400 to-pink-500 text-white rounded-lg hover:from-yellow-500 hover:to-pink-600 transition-all font-semibold text-sm sm:text-base shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95"
-                >
-                  Search
-                </button>
-              </div>
-            </div>
-            
-            {/* My Tools Section */}
-            <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-6 sm:mb-8 px-4">
-              <span className="text-sm sm:text-base font-semibold text-white/95 w-full sm:w-auto text-center sm:text-left">My Tools</span>
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 justify-center w-full sm:w-auto">
-                <button 
-                  onClick={() => {
-                    setActiveFilter(activeFilter === 'today' ? null : 'today');
-                    setShowAllTools(true);
-                    setHeroSearchQuery('');
-                    setSelectedCategory('');
-                    setTimeout(() => {
-                      toolsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                  }}
-                  className={`px-5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-                    activeFilter === 'today'
-                      ? 'bg-white text-purple-600 shadow-lg scale-105'
-                      : 'bg-white/20 backdrop-blur-md text-white border border-white/30 hover:bg-white/30 hover:scale-105'
-                  }`}
-                >
-                  Today
-                </button>
-                <button 
-                  onClick={() => {
-                    setActiveFilter(activeFilter === 'new' ? null : 'new');
-                    setShowAllTools(true);
-                    setHeroSearchQuery('');
-                    setSelectedCategory('');
-                    setTimeout(() => {
-                      toolsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                  }}
-                  className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all transform hover:scale-105 active:scale-95 shadow-lg touch-manipulation ${
-                    activeFilter === 'new'
-                      ? 'bg-gradient-to-r from-blue-400 to-cyan-500 text-white shadow-xl'
-                      : 'bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30'
-                  }`}
-                >
-                  New
-                </button>
-                <button 
-                  onClick={() => {
-                    setActiveFilter(activeFilter === 'saved' ? null : 'saved');
-                    setShowAllTools(true);
-                    setHeroSearchQuery('');
-                    setSelectedCategory('');
-                    setTimeout(() => {
-                      toolsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                  }}
-                  className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all transform hover:scale-105 active:scale-95 shadow-lg touch-manipulation ${
-                    activeFilter === 'saved'
-                      ? 'bg-gradient-to-r from-pink-400 to-rose-500 text-white shadow-xl'
-                      : 'bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30'
-                  }`}
-                >
-                  Most Saved
-                </button>
-                <button 
-                  onClick={() => {
-                    setActiveFilter(activeFilter === 'used' ? null : 'used');
-                    setShowAllTools(true);
-                    setHeroSearchQuery('');
-                    setSelectedCategory('');
-                    setTimeout(() => {
-                      toolsSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                  }}
-                  className={`px-4 sm:px-6 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold transition-all transform hover:scale-105 active:scale-95 shadow-lg touch-manipulation ${
-                    activeFilter === 'used'
-                      ? 'bg-gradient-to-r from-purple-400 to-indigo-500 text-white shadow-xl'
-                      : 'bg-white/20 backdrop-blur-md border border-white/30 text-white hover:bg-white/30'
-                  }`}
-                >
-                  Most Used
-                </button>
-              </div>
-            </div>
 
-            {/* Social Links */}
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-600">
-              <span>@toolify</span>
+            {/* Premium CTA buttons */}
+            <div className="flex flex-col sm:flex-row gap-5 justify-center items-center mb-16">
+              <Link
+                href="/pricing"
+                className="group relative px-10 py-5 bg-white text-red-700 rounded-2xl font-bold text-lg hover:bg-red-50 transition-all shadow-2xl hover:shadow-red-500/50 transform hover:scale-105 active:scale-95 overflow-hidden"
+              >
+                <span className="relative z-10">Start Free Trial</span>
+                <div className="absolute inset-0 bg-gradient-to-r from-red-50 to-pink-50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              </Link>
+              <button
+                onClick={() => {
+                  const featuresSection = document.getElementById('features');
+                  featuresSection?.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="px-10 py-5 bg-white/10 backdrop-blur-xl border-2 border-white/30 text-white rounded-2xl font-bold text-lg hover:bg-white/20 hover:border-white/50 transition-all shadow-xl hover:shadow-2xl transform hover:scale-105 active:scale-95"
+              >
+                Watch Demo
+              </button>
+            </div>
+            
+            {/* Premium Stats Cards */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-5xl mx-auto">
+              {benefits.map((benefit, index) => (
+                <div
+                  key={index}
+                  className="group px-8 py-6 bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 hover:bg-white/20 hover:border-white/40 transition-all shadow-xl hover:shadow-2xl transform hover:-translate-y-1"
+                >
+                  <div className="text-3xl md:text-4xl font-black text-white mb-2 drop-shadow-lg">{benefit.stat}</div>
+                  <div className="text-xs sm:text-sm text-white/80 font-medium">{benefit.label}</div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Tools Section - Only show first 8 for faster loading */}
-      {hotTools.length > 0 && (
-        <section className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-7xl relative z-10">
-          <div className="mb-8 sm:mb-12 text-center">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-3 sm:mb-4">
-              <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent">
-                Featured Tools
+      {/* Features Section - Premium Design */}
+      <section id="features" className="py-24 md:py-32 bg-gradient-to-b from-gray-50 via-white to-gray-50 relative overflow-hidden">
+        {/* Decorative background elements */}
+        <div className="absolute top-0 left-0 w-full h-full opacity-5">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-red-500 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-20 right-10 w-96 h-96 bg-rose-500 rounded-full filter blur-3xl"></div>
+        </div>
+        
+        <div className="container mx-auto px-4 max-w-7xl relative z-10">
+          <div className="text-center mb-20">
+            <div className="inline-block px-4 py-2 mb-6 bg-red-100 text-red-700 rounded-full text-sm font-bold">
+              POWERFUL FEATURES
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight">
+              <span className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
+                Everything You Need for SEO Success
               </span>
             </h2>
-            <p className="text-base sm:text-lg text-gray-600 font-medium">Handpicked AI tools you should try</p>
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
+              Powerful tools and insights to help you dominate search rankings and drive organic growth.
+            </p>
           </div>
           
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {hotTools.slice(0, 8).map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, index) => (
+              <div
+                key={index}
+                className="group relative p-10 bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all border border-gray-100 hover:border-red-200 transform hover:-translate-y-3 overflow-hidden"
+              >
+                {/* Premium gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-50/0 to-rose-50/0 group-hover:from-red-50/50 group-hover:to-rose-50/50 transition-all duration-500"></div>
+                
+                <div className="relative z-10">
+                  <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">{feature.icon}</div>
+                  <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-red-600 transition-colors">{feature.title}</h3>
+                  <p className="text-gray-600 leading-relaxed text-lg">{feature.description}</p>
+                </div>
+                
+                {/* Decorative corner accent */}
+                <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-red-500/10 to-transparent rounded-bl-full"></div>
+              </div>
             ))}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
-      {/* All Tools Section with Search and Filters */}
-      <section ref={toolsSectionRef} className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-7xl relative z-10">
-        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-          <div>
-            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-              {showAllTools || heroSearchQuery ? 'Search Results' : 'All Free AI Tools'}
+      {/* Image Section - You can add your image here */}
+      <section className="py-20 md:py-32 bg-white relative overflow-hidden">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="relative rounded-3xl overflow-hidden shadow-2xl">
+            {/* Placeholder for your image - Replace with your image path */}
+            {/* 
+            To add your image:
+            1. Put your image in the public folder (e.g., public/hero-image.jpg)
+            2. Uncomment and update the img tag below:
+            
+            <img
+              src="/your-image.jpg"
+              alt="SEMRUSH Platform"
+              className="w-full h-[500px] md:h-[600px] object-cover"
+            />
+            */}
+            <div className="relative w-full h-[500px] md:h-[600px] bg-gradient-to-br from-red-900 via-red-800 to-rose-900 flex items-center justify-center">
+              <div className="text-center text-white z-10">
+                <div className="text-6xl mb-4">📸</div>
+                <p className="text-xl font-semibold">Add Your Premium Image Here</p>
+                <p className="text-sm text-white/80 mt-2">Put your image in public folder and update the code</p>
+                <p className="text-xs text-white/60 mt-1">See HOW_TO_ADD_IMAGE.md for instructions</p>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Testimonials Section - Premium Design */}
+      <section className="py-24 md:py-32 bg-gradient-to-b from-white via-gray-50 to-white">
+        <div className="container mx-auto px-4 max-w-7xl">
+          <div className="text-center mb-20">
+            <div className="inline-block px-4 py-2 mb-6 bg-red-100 text-red-700 rounded-full text-sm font-bold">
+              TESTIMONIALS
+            </div>
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-6 tracking-tight">
+              <span className="bg-gradient-to-r from-red-600 via-rose-600 to-pink-600 bg-clip-text text-transparent">
+                Trusted by Industry Leaders
+              </span>
             </h2>
-            <p className="text-sm sm:text-base text-gray-600">
-              {showAllTools || heroSearchQuery 
-                ? `Searching through ${aiTools.length} AI tools`
-                : `Browse and search through ${aiTools.length} AI tools`}
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto font-light">
+              Join thousands of companies using SEMRUSH to grow their organic traffic.
             </p>
           </div>
-          {(showAllTools || heroSearchQuery || selectedCategory || activeFilter) && (
-            <button
-              onClick={() => {
-                setShowAllTools(false);
-                setHeroSearchQuery('');
-                setSelectedCategory('');
-                setActiveFilter(null);
-              }}
-              className="px-4 py-2.5 text-sm text-gray-600 hover:text-gray-900 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors touch-manipulation active:scale-95 w-full sm:w-auto"
-            >
-              Clear Filters
-            </button>
-          )}
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, index) => (
+              <div
+                key={index}
+                className="group relative p-10 bg-white rounded-3xl shadow-xl hover:shadow-2xl border border-gray-100 hover:border-red-200 transition-all transform hover:-translate-y-2 overflow-hidden"
+              >
+                {/* Premium gradient background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-red-50/0 to-rose-50/0 group-hover:from-red-50/30 group-hover:to-rose-50/30 transition-all duration-500"></div>
+                
+                <div className="relative z-10">
+                  <div className="flex items-center mb-6">
+                    <div className="text-5xl mr-4 transform group-hover:scale-110 transition-transform">{testimonial.avatar}</div>
+                    <div>
+                      <div className="font-black text-gray-900 text-lg">{testimonial.name}</div>
+                      <div className="text-sm text-gray-600 font-medium">{testimonial.role}</div>
+                    </div>
+                  </div>
+                  <p className="text-gray-700 leading-relaxed italic text-lg">&quot;{testimonial.content}&quot;</p>
+                  
+                  {/* Decorative quote mark */}
+                  <div className="absolute top-4 right-4 text-6xl text-red-100 font-serif">&quot;</div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section - Premium Red Theme */}
+      <section className="py-24 md:py-32 bg-gradient-to-br from-red-900 via-red-800 to-rose-900 text-white relative overflow-hidden">
+        {/* Premium background effects */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-red-500/20 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-rose-500/20 rounded-full filter blur-3xl"></div>
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff08_1px,transparent_1px),linear-gradient(to_bottom,#ffffff08_1px,transparent_1px)] bg-[size:4rem_4rem]"></div>
         </div>
         
-        {showAllTools || heroSearchQuery || selectedCategory || activeFilter ? (
-          <ToolList 
-            tools={activeFilter ? getFilteredTools() : aiTools} 
-            initialSearch={heroSearchQuery}
-            initialCategory={selectedCategory}
-            onCategoryChange={setSelectedCategory}
-          />
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
-            {/* Only show first 20 tools initially for faster loading */}
-            {aiTools.slice(0, 20).map((tool) => (
-              <ToolCard key={tool.id} tool={tool} />
-            ))}
-            {aiTools.length > 20 && (
-              <div className="col-span-full text-center py-6 sm:py-8">
-                <button
-                  onClick={() => setShowAllTools(true)}
-                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl hover:from-blue-700 hover:to-purple-700 transition-all font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 active:scale-95 touch-manipulation"
-                >
-                  View All {aiTools.length} Tools
-                </button>
-              </div>
-            )}
-          </div>
-        )}
-      </section>
-
-      {/* Categories Section */}
-      <section className="relative bg-gradient-to-b from-white/95 to-white backdrop-blur-sm border-t border-gray-200/50">
-        <div className="container mx-auto px-4 sm:px-6 py-12 sm:py-16 max-w-7xl relative z-10">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-8 sm:mb-12 text-center">
-            <span className="bg-gradient-to-r from-purple-600 via-pink-500 to-blue-600 bg-clip-text text-transparent">
-              Browse by Category
-            </span>
+        <div className="container mx-auto px-4 max-w-4xl text-center relative z-10">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-black mb-8 tracking-tight drop-shadow-2xl">
+            Ready to Dominate Search Rankings?
           </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => handleCategoryClick(category)}
-                className="p-4 sm:p-6 border-2 border-gray-200 rounded-2xl hover:border-purple-400 hover:bg-gradient-to-br hover:from-purple-50 hover:to-pink-50 transition-all cursor-pointer text-left w-full group shadow-md hover:shadow-xl transform hover:-translate-y-2 active:scale-95 touch-manipulation"
-              >
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 min-w-0">
-                    <span className="text-sm sm:text-base font-bold text-gray-800 group-hover:bg-gradient-to-r group-hover:from-purple-600 group-hover:to-pink-600 group-hover:bg-clip-text group-hover:text-transparent transition-all block truncate mb-1 sm:mb-2">
-                      {category}
-                    </span>
-                    <span className="text-xs sm:text-sm font-semibold text-gray-500 group-hover:text-purple-600">
-                      {categoryCounts[category] || 0} {categoryCounts[category] === 1 ? 'tool' : 'tools'}
-                    </span>
-                  </div>
-                  <span className="text-xl sm:text-2xl ml-2 flex-shrink-0 group-hover:scale-125 transition-transform">💼</span>
-                </div>
-              </button>
-            ))}
+          <p className="text-xl sm:text-2xl text-white/90 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            Start your free 14-day trial today. No credit card required. Cancel anytime.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row gap-5 justify-center items-center max-w-lg mx-auto mb-10">
+            <input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="w-full px-6 py-5 rounded-2xl text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-4 focus:ring-white/30 text-lg shadow-2xl border-0"
+            />
+            <Link
+              href="/pricing"
+              className="w-full sm:w-auto px-10 py-5 bg-white text-red-700 rounded-2xl font-black text-lg hover:bg-red-50 transition-all shadow-2xl hover:shadow-red-500/50 transform hover:scale-105 active:scale-95"
+            >
+              Get Started
+            </Link>
           </div>
+
+          <p className="text-sm text-white/70 font-medium">
+            Trusted by 10M+ users worldwide • 99.9% uptime • 24/7 support
+          </p>
         </div>
       </section>
-
-      {/* Scroll to Top Button */}
-      <ScrollToTop />
     </main>
   );
 }

@@ -13,29 +13,12 @@
 }
 
 body {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-  background-attachment: fixed;
+  background: #ffffff;
   min-height: 100vh;
   color: #171717;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-body::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.4) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(255, 119, 198, 0.4) 0%, transparent 50%),
-    radial-gradient(circle at 50% 20%, rgba(99, 102, 241, 0.3) 0%, transparent 50%);
-  pointer-events: none;
-  z-index: 0;
-  animation: backgroundShift 20s ease-in-out infinite;
 }
 
 @keyframes backgroundShift {
@@ -45,6 +28,19 @@ body::before {
   50% {
     opacity: 0.8;
   }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
 }
 
 * {
@@ -100,9 +96,9 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Focus styles for accessibility */
+/* Focus styles for accessibility - Red theme */
 *:focus-visible {
-  outline: 2px solid #3b82f6;
+  outline: 2px solid #dc2626;
   outline-offset: 2px;
 }
 
@@ -122,7 +118,7 @@ html {
   
   /* Prevent text selection on buttons */
   button {
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+    -webkit-tap-highlight-color: rgba(220, 38, 38, 0.1);
     user-select: none;
   }
 }
@@ -130,7 +126,7 @@ html {
 /* Touch optimization */
 .touch-manipulation {
   touch-action: manipulation;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.1);
+  -webkit-tap-highlight-color: rgba(220, 38, 38, 0.1);
 }
 
 /* Prevent horizontal scroll on mobile */
@@ -139,13 +135,13 @@ html, body {
   max-width: 100vw;
 }
 
-/* Premium card glow effect */
+/* Premium card glow effect - Red theme */
 @keyframes glow {
   0%, 100% {
-    box-shadow: 0 10px 40px rgba(99, 102, 241, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 40px rgba(220, 38, 38, 0.3), 0 0 0 1px rgba(255, 255, 255, 0.1);
   }
   50% {
-    box-shadow: 0 20px 60px rgba(99, 102, 241, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(220, 38, 38, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
   }
 }
 
@@ -168,34 +164,31 @@ html, body {
 .premium-card:hover {
   animation: glow 2s ease-in-out infinite;
   transform: translateY(-8px) scale(1.03);
-  border-color: rgba(99, 102, 241, 0.5);
+  border-color: rgba(220, 38, 38, 0.5);
 }
 
-/* Gradient text */
+/* Gradient text - Red theme */
 .gradient-text {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  background: linear-gradient(135deg, #dc2626 0%, #e11d48 50%, #f43f5e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-/* Shimmer effect */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
+/* Premium scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
 }
 
-.shimmer {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0) 0%,
-    rgba(255, 255, 255, 0.2) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
-  background-size: 1000px 100%;
-  animation: shimmer 3s infinite;
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #dc2626, #e11d48);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #b91c1c, #dc2626);
 }
